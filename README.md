@@ -1,2 +1,0 @@
-# tsAxios
-axios with ts
