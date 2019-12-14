@@ -63,8 +63,11 @@ export interface AxiosInstance extends Axios{
   <T=any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-// 拦截器
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+}
 
+// 拦截器
 export interface ResolvedFn<T> {
   (val: T) : T | Promise<T>
 }
