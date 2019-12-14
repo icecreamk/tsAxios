@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig } from './types'
 import Axios from './core/Axios'
 import {extend} from './helpers/util'
-import defaults from './types/defaults'
+import defaults from './defaults'
 
 
 function createInstance(config: AxiosRequestConfig): AxiosInstance {
