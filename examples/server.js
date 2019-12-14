@@ -36,6 +36,7 @@ registerSimpleRouter()
 registerBaseRouter()
 registerErrorRouter()
 registerExtendRouter()
+registerInterceptorRouter()
 
 app.use(router)
 
@@ -135,9 +136,15 @@ function registerExtendRouter () {
       code: 0,
       message: 'ok',
       result: {
-        name: 'jack',
+        name: 'kkkk',
         age: 18
       }
     })
+  })
+}
+
+function registerInterceptorRouter () {
+  router.get('/interceptor/get', function(req, res) {
+    res.end('hello')
   })
 }
