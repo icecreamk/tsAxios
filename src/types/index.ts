@@ -20,6 +20,8 @@ export interface AxiosRequestConfig {
   withCredentials?: boolean
   xsrfCookieName?: string
   xsrfHeaderName?: string
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadloadProgress?: (e: ProgressEvent) => void
   [propName:string]: any
 }
 
