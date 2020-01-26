@@ -37,9 +37,9 @@ const defaults: AxiosRequestConfig = {
     }
   ],
 
-  // validateStatus(status: number): boolean {
-  //   return status >= 200 && status < 300
-  // }
+  validateStatus(status: number): boolean {
+    return status >=200 && status < 300
+  }
 }
 
 const methodsNoData = ['delete', 'get', 'head', 'options']
