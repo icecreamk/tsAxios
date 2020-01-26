@@ -17,6 +17,13 @@ const defaults: AxiosRequestConfig = {
     }
   },
 
+  xsrfCookieName: 'XSRF_TOKEN', // 存储token的cookie名称
+  xsrfHeaderName: 'x-XSRF-TOKEN', // token对应的header名称
+
+  // 1.判断 withCredentials为true 或者是同域请求，才会请求headers中添加xsrf相关字段
+  // 2.判断诚诚，从cookie中读取xsrf的token值
+  // 3.若取到值，将它添加到请求headers的xsrf相关字段中
+
   transformRequest: [
     function (data: any, headers: any): any {
       processHeaders(headers, data)

@@ -21,7 +21,12 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler))
 
-app.use(express.static(__dirname))
+app.use(express.static(__dirname, {
+  // 每次请求都在headers中添加cookie
+  setHeaders (res) {
+    res.cookie('XSRF-TOKEN-D', '123abc')
+  }
+}))
 
 app.use(bodyParser.json())
 // app.use(bodyParser.text())
