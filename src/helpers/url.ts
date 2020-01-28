@@ -1,5 +1,4 @@
-import { isDate, isPlainObject } from "./util"
-import { parseHeaders } from "./headers"
+import { isDate, isPlainObject, isURLSearchParams } from "./util"
 
 interface URLOrigin {
   protocol: string,
@@ -17,7 +16,7 @@ function encode(val: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function buildURL(url: string, params?:any): string {
+export function buildURL(url: string, params?:any, paramsSerializer?: (params: any) => string): string {
 
   // 需要处理的情况：
   // 参数为数组 http://xxx.api?a[]=1&a[]=2
@@ -31,36 +30,46 @@ export function buildURL(url: string, params?:any): string {
   if(!params) {
     return url
   }
-  const parts: string[] = []
 
-  Object.keys(params).forEach((key) => {
-    const val = params[key]
+  let serializeParams
 
-    if (val === null || typeof val === 'undefined') {
-      // 跳出当前循环，进入下一个循环
-      return
-    }
+  if(paramsSerializer) {
+    serializeParams = paramsSerializer(params)
+  } else if(isURLSearchParams(params)) {
+    serializeParams = params.toString()
+  } else {
+    const parts: string[] = []
 
-    // 统一转换成数组
-    let values = []
-    if(Array.isArray(val)) {
-      values = val
-      key += '[]'
-    } else {
-      values = [val]
-    }
+    Object.keys(params).forEach((key) => {
+      const val = params[key]
 
-    values.forEach((val) => {
-      if(isDate(val)) {
-        val = val.toISOString()
-      } else if(isPlainObject(val)) {
-        val = JSON.stringify(val)
+      if (val === null || typeof val === 'undefined') {
+        // 跳出当前循环，进入下一个循环
+        return
       }
-      parts.push(`${encode(key)}=${encode(val)}`)
-    })
-  })
 
-  let  serializeParams = parts.join('&')
+      // 统一转换成数组
+      let values = []
+      if(Array.isArray(val)) {
+        values = val
+        key += '[]'
+      } else {
+        values = [val]
+      }
+
+      values.forEach((val) => {
+        if(isDate(val)) {
+          val = val.toISOString()
+        } else if(isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+        parts.push(`${encode(key)}=${encode(val)}`)
+      })
+    })
+
+    serializeParams = parts.join('&')
+  }
+
 
   if(serializeParams) {
     const markIdx = url.indexOf('#')

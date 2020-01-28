@@ -1,5 +1,5 @@
 import axios, { AxiosError } from '../../src/index'
-// import qs from 'qs'
+import qs from 'qs'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
 
@@ -114,38 +114,38 @@ axios.get('/more/304', {
 }).catch((e: AxiosError) => {
   console.log('error', e.message)
 })
-//
-// axios.get('/more/get', {
-//   params: new URLSearchParams('a=b&c=d')
-// }).then(res => {
-//   console.log(res)
-// })
-//
-// axios.get('/more/get', {
-//   params: {
-//     a: 1,
-//     b: 2,
-//     c: ['a', 'b', 'c']
-//   }
-// }).then(res => {
-//   console.log(res)
-// })
-//
-// const instance = axios.create({
-//   paramsSerializer(params) {
-//     return qs.stringify(params, { arrayFormat: 'brackets' })
-//   }
-// })
-//
-// instance.get('/more/get', {
-//   params: {
-//     a: 1,
-//     b: 2,
-//     c: ['a', 'b', 'c']
-//   }
-// }).then(res => {
-//   console.log(res)
-// })
+
+axios.get('/more/get', {
+  params: new URLSearchParams('a=b&c=d')
+}).then(res => {
+  console.log(res)
+})
+
+axios.get('/more/get', {
+  params: {
+    a: 1,
+    b: 2,
+    c: ['a', 'b', 'c']
+  }
+}).then(res => {
+  console.log(res)
+})
+
+const instance2 = axios.create({
+  paramsSerializer(params) {
+    return qs.stringify(params, { arrayFormat: 'brackets' })
+  }
+})
+
+instance2.get('/more/get', {
+  params: {
+    a: 1,
+    b: 2,
+    c: ['a', 'b', 'c']
+  }
+}).then(res => {
+  console.log(res)
+})
 
 // const instance = axios.create({
 //   baseURL: 'https://img.mukewang.com/'
